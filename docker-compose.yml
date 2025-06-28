@@ -1,0 +1,36 @@
+services:
+  consul:
+    image: hashicorp/consul:latest
+    container_name: "consul"
+    ports:
+      - "5001:8500"
+
+  pedidosapi: 
+    # image: ${DOCKER_REGISTRY-}pedidosapi
+    build:
+      context: .
+      dockerfile: Pedidos.API/Dockerfile
+    environment:
+     - ASPNETCORE_ENVIRONMENT=Development
+     - ASPNETCORE_HTTP_PORTS=8080
+
+  pizzaapi:
+    # image: ${DOCKER_REGISTRY-}pizzaapi
+    build:
+      context: .
+      dockerfile: Pizza.API/Dockerfile
+    environment:
+     - ASPNETCORE_ENVIRONMENT=Development
+     - ASPNETCORE_HTTP_PORTS=8080
+
+  apigateway:
+    # image: ${DOCKER_REGISTRY-}apigateway
+    build:
+      context: .
+      dockerfile: ApiGateway/Dockerfile
+    environment:
+     - ASPNETCORE_ENVIRONMENT=Development
+     - ASPNETCORE_HTTP_PORTS=8080
+    ports:
+     - "3001:8080"
+

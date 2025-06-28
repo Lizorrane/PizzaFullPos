@@ -9,28 +9,28 @@ namespace Pizza.API.Percistence
         {
             return dbContext.Estoques.ToList();
         }
-
         public Estoque GetById(int id)
         {
-            var estoque = dbContext.Estoques.FirstOrDefault(e => e.Id == id);
+            var estoque = dbContext.Estoques
+                .FirstOrDefault(e => e.Id == id);
 
-            if (estoque == null)
+            if (estoque is null)
             {
-                throw new NaoEncontradoException("Estoque não cadastrado.");
+                throw new NaoEncontradoException("Estoque não encontrado.");
             }
             return estoque;
         }
-
         public Estoque Add(Estoque estoque)
         {
-            var pizza = dbContext.Pizzas.FirstOrDefault(p => p.Id == estoque.PizzaId);
+            var pizza = dbContext.Pizzas
+                .FirstOrDefault(p => p.Id == estoque.PizzaId);
 
             if (pizza is null)
             {
-                throw new ArgumentException("A pizza ainda não foi cadastrada");
+                throw new ArgumentException("A pizza ainda não foi cadastrada!");
             }
-
-            var existeEstoque = dbContext.Estoques.FirstOrDefault(e => e.PizzaId == estoque.PizzaId);
+            var existeEstoque = dbContext.Estoques
+                .FirstOrDefault(e => e.PizzaId == estoque.PizzaId);
 
             if (existeEstoque is not null)
             {
@@ -39,32 +39,29 @@ namespace Pizza.API.Percistence
 
             estoque.Pizza = pizza;
 
-            dbContext.Estoques.Add(estoque);    
+            dbContext.Estoques.Add(estoque);
             dbContext.SaveChanges();
 
             return estoque;
         }
-
         public Estoque GetByPizzaId(int pizzaId)
         {
-            var estoque = dbContext.Estoques.FirstOrDefault(e => e.PizzaId == pizzaId);
+            var estoque = dbContext.Estoques
+                .FirstOrDefault(e => e.PizzaId == pizzaId);
 
             if (estoque is null)
             {
-                throw new NaoEncontradoException("Pizza não encontrada");
+                throw new NaoEncontradoException("Pizza não encontrada.");
             }
             return estoque;
         }
-
         public Estoque Update(int pizzaId, int quantidadeARemover)
         {
             var estoque = GetByPizzaId(pizzaId);
-
-            // verificar se está pedindo mais pizzas do que temos em estoque
+            //Verificar se está pedindo mais pizzas do que temos em estoque
             if (quantidadeARemover > estoque.Quantidade)
             {
-                throw new ArgumentException("A quantidade solicitada é superior ao estoque atual.");
-
+                throw new ArgumentException("A quantidade solicidada é superior ao estoqeu atual");
             }
             estoque.Quantidade -= quantidadeARemover;
             estoque.AtualizadoEm = DateTime.UtcNow;
