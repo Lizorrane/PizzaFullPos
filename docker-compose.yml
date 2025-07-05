@@ -27,6 +27,18 @@ services:
     ports: 
      - "4003:8080"
 
+  notificacoesapi:
+    image: brunoosilva/ms-notificacoesservice
+    # build:
+    #   context: .
+    #   dockerfile: ./NotificacoesAPI/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - Consul__Discovery__Hostname=notificacoesapi
+    ports:
+      - "4001:8080"
+
   apigateway:
     # image: ${DOCKER_REGISTRY-}apigateway
     build:
@@ -37,4 +49,11 @@ services:
      - ASPNETCORE_HTTP_PORTS=8080
     ports:
      - "3001:8080"
-
+  fake-smtp-server:
+      image: gessnerfl/fake-smtp-server:latest
+      container_name: "fake-smtp-server"
+      restart: always
+      ports:
+        # - 8025:8025      #expose smtp port
+        - 7001:8080      #expose web ui
+        - 7002:8081      #expose management api

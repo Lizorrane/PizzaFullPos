@@ -3,9 +3,9 @@ using PedidosAPI.HttpClients;
 using PedidosAPI.Models;
 using PedidosAPI.Persistence;
 
-namespace PedidosAPI.Services
+namespace Pedidos.API.Services
 {
-    public class PedidoService(PedidoRepository repository, PizzaApiHttpClient.Client pizzaApi)
+    public class PedidoService(PedidoRepository repository, PizzaApiHttpClient.Client pizzaApi, NotificacoesApiHttpClient.Client notificacoesApi)
     {
         //Adicionar
         public async Task<Pedido> Add(Pedido pedido)
@@ -20,8 +20,13 @@ namespace PedidosAPI.Services
             await pizzaApi.UpdateEstoque(pedido.PizzaId, pedido.Quantidade);
             //3. Salvar o pedido
             repository.Add(pedido);
-
+            
             //4. Notifica o cliente
+
+            await notificacoesApi.CriarNotificacoesAsync(
+                 pedido.Id,
+                 pedido.Cliente, 
+                 $"Seu pedido {pedido.Id} foi confirmado!");
             return pedido;
         }
         //ObterPorId

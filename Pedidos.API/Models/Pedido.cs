@@ -18,5 +18,7 @@ namespace PedidosAPI.Models
         }
         public DateTime CriadoEm { get; set; } = DateTime.UtcNow;
         public DateTime AtualizadoEm { get; set; } 
+        public StatusPedido SituacaoId {get; set;} = StatusPedido.Recebido;
+        public string Situacao => SituacaoId.ToString();
     }
 }

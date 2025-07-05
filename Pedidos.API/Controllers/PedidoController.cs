@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PedidosAPI.Models;
-using PedidosAPI.Services;
+using Pedidos.API.Services;
 
-namespace PedidosAPI.Controllers
+namespace Pedidos.API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
@@ -22,9 +22,14 @@ namespace PedidosAPI.Controllers
             return pedidoService.GetAll();
         }
         [HttpPost]
-        public async Task<Pedido> Add(Pedido pedido)
-        {
-            return await pedidoService.Add(pedido);
+        public async Task <ActionResult<Pedido>> Add(Pedido pedido)
+           {
+            await pedidoService.Add(pedido);
+            // 201
+            return CreatedAtAction(
+                nameof(GetById),
+                new { id = pedido.Id, pedido});
+
         }
 
     }

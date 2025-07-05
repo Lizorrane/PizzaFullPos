@@ -1,5 +1,4 @@
 ﻿using Pizza.API.Exceptions;
-using Pizza.API.Models;
 namespace Pizza.API.Percistence
 {
     public class PizzaRepository(PizzaDbContext dbContext)

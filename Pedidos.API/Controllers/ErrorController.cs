@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using Pizza.API.Exceptions;
+using Pedidos.API.Exceptions;
 
 namespace Pizza.API.Controllers
 {

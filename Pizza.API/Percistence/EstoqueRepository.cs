@@ -1,4 +1,5 @@
-﻿using Pizza.API.Exceptions;
+﻿using Microsoft.EntityFrameworkCore;
+using Pizza.API.Exceptions;
 using Pizza.API.Models;
 
 namespace Pizza.API.Percistence
@@ -7,11 +8,11 @@ namespace Pizza.API.Percistence
     {
         public List<Estoque> GetAll()
         {
-            return dbContext.Estoques.ToList();
+            return dbContext.Estoques.Include(e => e.Pizza).ToList();
         }
         public Estoque GetById(int id)
         {
-            var estoque = dbContext.Estoques
+            var estoque = dbContext.Estoques.Include(e => e.Pizza)
                 .FirstOrDefault(e => e.Id == id);
 
             if (estoque is null)
@@ -47,6 +48,7 @@ namespace Pizza.API.Percistence
         public Estoque GetByPizzaId(int pizzaId)
         {
             var estoque = dbContext.Estoques
+               .Include(e => e.Pizza)
                 .FirstOrDefault(e => e.PizzaId == pizzaId);
 
             if (estoque is null)
