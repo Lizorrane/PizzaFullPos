@@ -25,12 +25,12 @@ builder.Services.AddProblemDetails();
 
 builder.Services.AddHttpClient<PizzaApiHttpClient.Client>(options =>
 {
-    // Mude de "http://pizza-service" para "http://pizzaapi:8080"
+   
     options.BaseAddress = new Uri("http://pizzaapi:8080"); 
 }).AddServiceDiscovery();
 builder.Services.AddHttpClient<NotificacoesApiHttpClient.Client>("notificacao", options =>
 {
-    // Mude de "http://notificacoes-service" para "http://notificacoesapi:8080"
+    
     options.BaseAddress = new Uri("http://notificacoesapi:8080"); 
 }).AddServiceDiscovery();
 

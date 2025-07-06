@@ -5,33 +5,24 @@ services:
     ports:
       - "5001:8500"
 
-  pedidosapi: 
-    # image: ${DOCKER_REGISTRY-}pedidosapi
-    build:
-      context: .
-      dockerfile: Pedidos.API/Dockerfile
+  pedidosapi:
+    image: lizorrane/pedidosapi:latest
     environment:
-     - ASPNETCORE_ENVIRONMENT=Development
-     - ASPNETCORE_HTTP_PORTS=8080
-    ports: 
-     - "4002:8080"
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+    ports:
+      - "4002:8080"
 
   pizzaapi:
-    # image: ${DOCKER_REGISTRY-}pizzaapi
-    build:
-      context: .
-      dockerfile: Pizza.API/Dockerfile
+    image: lizorrane/pizzaapi:latest
     environment:
-     - ASPNETCORE_ENVIRONMENT=Development
-     - ASPNETCORE_HTTP_PORTS=8080
-    ports: 
-     - "4003:8080"
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+    ports:
+      - "4003:8080"
 
   notificacoesapi:
     image: brunoosilva/ms-notificacoesservice
-    # build:
-    #   context: .
-    #   dockerfile: ./NotificacoesAPI/Dockerfile
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
@@ -40,20 +31,17 @@ services:
       - "4001:8080"
 
   apigateway:
-    # image: ${DOCKER_REGISTRY-}apigateway
-    build:
-      context: .
-      dockerfile: ApiGateway/Dockerfile
+    image: lizorrane/apigateway:latest
     environment:
-     - ASPNETCORE_ENVIRONMENT=Development
-     - ASPNETCORE_HTTP_PORTS=8080
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
     ports:
-     - "3001:8080"
+      - "3001:8080"
+
   fake-smtp-server:
-      image: gessnerfl/fake-smtp-server:latest
-      container_name: "fake-smtp-server"
-      restart: always
-      ports:
-        # - 8025:8025      #expose smtp port
-        - 7001:8080      #expose web ui
-        - 7002:8081      #expose management api
+    image: gessnerfl/fake-smtp-server:latest
+    container_name: "fake-smtp-server"
+    restart: always
+    ports:
+      - 7001:8080
+      - 7002:8081
