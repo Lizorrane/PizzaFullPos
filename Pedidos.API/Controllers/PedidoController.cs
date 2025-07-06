@@ -21,16 +21,20 @@ namespace Pedidos.API.Controllers
         {
             return pedidoService.GetAll();
         }
+
         [HttpPost]
-        public async Task <ActionResult<Pedido>> Add(Pedido pedido)
-           {
-            await pedidoService.Add(pedido);
-            // 201
-            return CreatedAtAction(
-                nameof(GetById),
-                new { id = pedido.Id, pedido});
-
+        public async Task<ActionResult<Pedido>> Add(Pedido pedido)
+        {
+            try
+            {
+                await pedidoService.Add(pedido);
+                return CreatedAtAction(nameof(GetById), new { id = pedido.Id }, pedido);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[ERRO] {ex.GetType().Name}: {ex.Message}");
+                return StatusCode(500, $"Erro interno: {ex.Message}");
+            }
         }
-
     }
 }

@@ -29,13 +29,14 @@ var app = builder.Build();
 
 app.UseSwagger();
 app.UseSwaggerUI();
+
 app.UseHttpsRedirection();
 app.UseAuthorization();
-app.MapControllers();
 
 app.UseExceptionHandler("/error");
-
 app.UseHealthChecks("/health");
 
+app.UseDiscoveryClient();
 
+app.MapControllers();
 app.Run();

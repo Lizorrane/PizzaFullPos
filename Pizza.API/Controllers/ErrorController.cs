@@ -26,7 +26,7 @@ namespace Pizza.API.Controllers
                 return Problem(statusCode: 400, title: "Ocorreu um problema",
                                detail: exception.Message);
             }
-            
+
             return Problem(title: "Ocorreu um problema não esperado");
         }
     }

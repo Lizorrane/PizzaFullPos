@@ -38,7 +38,7 @@ namespace Pizza.API.Controllers
         }
 
         [HttpPut("pizza/{pizzaId}/{quantidade}")]
-        public Estoque Updade(int pizzaId, int quantidade)
+        public Estoque Update(int pizzaId, int quantidade)
         {
             return estoqueRepository.Update(pizzaId, quantidade);
         }

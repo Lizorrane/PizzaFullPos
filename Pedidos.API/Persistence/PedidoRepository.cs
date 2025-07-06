@@ -1,4 +1,6 @@
 ﻿
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 using PedidosAPI.Models;
 using PedidosAPI.Persistence;
 
